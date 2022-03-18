@@ -1,26 +1,26 @@
 {
-  "name": "dev",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/FacuCameto/dev.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/FacuCameto/dev/issues"
-  },
-  "homepage": "https://github.com/FacuCameto/dev#readme",
-  "keywords": [],
-  "description": "",
-  "devDependencies": {
-    "eslint": "^8.11.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-prettier": "^4.0.0",
-    "prettier": "^2.6.0"
-  }
+    "name": "dev",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/FacuCameto/dev.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/FacuCameto/dev/issues"
+    },
+    "homepage": "https://github.com/FacuCameto/dev#readme",
+    "keywords": [],
+    "description": "",
+    "devDependencies": {
+        "eslint": "^8.11.0",
+        "eslint-config-prettier": "^8.5.0",
+        "eslint-plugin-prettier": "^4.0.0",
+        "prettier": "^2.6.0"
+    }
 }
