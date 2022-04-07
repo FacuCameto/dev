@@ -1,0 +1,17 @@
+console.log("Start");
+
+function aFunction(param1, param2) {
+    return new Promise((res, reject) => {
+        setTimeout(() => {
+            console.log("Data found!");
+            const varForParam3 = param1 + " " + param2;
+            res(varForParam3);
+        }, 2000);
+    });
+}
+
+aFunction("data 1", "data 2").then(function (res) {
+    console.log(res);
+});
+
+console.log("Finish");
