@@ -50,8 +50,8 @@ module.exports.main = async function (ffCollection, vvClient, response) {
      Configurable Variables
     ************************/
 
-    const wSTemplateName = "Web Service Test";
-    const postWSTemplateName = "Web Service Test Post";
+    const parentTemplateName = `Milestone 9 Related Form`;
+    const childTemplateName = "Milestone 9 Form";
 
     /*****************
      Script Variables
@@ -206,13 +206,8 @@ module.exports.main = async function (ffCollection, vvClient, response) {
         // 1.GET THE VALUES OF THE FIELDS
 
         const formID = getFieldValueByName("Form ID");
-        /* const items = [
-            getFieldValueByName("Cell Item1"),
-            getFieldValueByName("Cell Item2"),
-            getFieldValueByName("Cell Item3"),
-            getFieldValueByName("Cell Item4"),
-        // ]; */
-        //const firstName = getFieldValueByName("First Name");
+        const role = getFieldValueByName("Role Selector");
+        console.log(ffCollection);
 
         // 2.CHECKS IF THE REQUIRED PARAMETERS ARE PRESENT
 
@@ -222,69 +217,52 @@ module.exports.main = async function (ffCollection, vvClient, response) {
         }
 
         // 3.YOUR CODE GOES HERE
-        shortDescription = `Get form ${formID}`;
-        //var itemsString = [];
-        /* for (let i = 0; i < items.length; i++) {
-            var string = "Item " + (i + 1) + ", quantity: " + items[i] + "\n";
-            itemsString.push(string);
-        } */
-        //console.log(itemsString);
+        // 1. Get the "parentGUID" or "revisionID" of a given template
+
+        const parentFormRole = role;
+        shortDescription = `Get form with role ${parentFormRole}`;
 
         const getFormsParams = {
-            q: `[Form ID] eq '${formID}'`,
-            expand: true, // true to get all the form's fields
-            // fields: 'id,name', // to get only the fields 'id' and 'name'
+            q: `[role] eq '${parentFormRole}'`,
+            expand: true,
         };
 
-        const getFormsRes = await vvClient.forms
-            .getForms(getFormsParams, wSTemplateName)
+        const getParentFormRes = await vvClient.forms
+            .getForms(getFormsParams, parentTemplateName)
             .then((res) => parseRes(res))
             .then((res) => checkMetaAndStatus(res, shortDescription))
             .then((res) => checkDataPropertyExists(res, shortDescription))
             .then((res) => checkDataIsNotEmpty(res, shortDescription));
-        //  If you want to throw an error and stop the process if no data is returned, uncomment the line above
 
-        if (getFormsRes.data.length == 0) {
-            // The error
-        } else {
-            // Here it goes post form
-            //console.log(getFormsRes.data[0]["cell Item1"]);
-            shortDescription = `Post form ${postWSTemplateName}`;
-            var textFieldText =
-                "Item 1 quantity: " +
-                getFormsRes.data[0]["cell Item1"] +
-                "\n" +
-                "Item 2 quantity: " +
-                getFormsRes.data[0]["cell Item2"] +
-                "\n" +
-                "Item 3 quantity: " +
-                getFormsRes.data[0]["cell Item3"] +
-                "\n" +
-                "Item 4 quantity: " +
-                getFormsRes.data[0]["cell Item4"] +
-                "\n" +
-                "Total: " +
-                getFormsRes.data[0]["cell Total"];
+        const parentGUID = getParentFormRes.data[0].revisionId;
+        console.log(getParentFormRes);
 
-            const newFormData = {
-                "textBox Main": textFieldText,
-                "textField CartFormID": formID,
-            };
-            //console.log(getFormsRes.data);
+        const getFirstFormsParams = {
+            q: `[Form ID] eq '${formID}'`,
+            expand: true,
+        };
 
-            const postFormRes = await vvClient.forms
-                .postForms(null, newFormData, postWSTemplateName)
-                .then((res) => parseRes(res))
-                .then((res) => checkMetaAndStatus(res, shortDescription))
-                .then((res) => checkDataPropertyExists(res, shortDescription))
-                .then((res) => checkDataIsNotEmpty(res, shortDescription));
+        const getChildFormRes = await vvClient.forms
+            .getForms(getFirstFormsParams, childTemplateName)
+            .then((res) => parseRes(res))
+            .then((res) => checkMetaAndStatus(res, shortDescription))
+            .then((res) => checkDataPropertyExists(res, shortDescription))
+            .then((res) => checkDataIsNotEmpty(res, shortDescription));
 
-            // 4.BUILD THE SUCCESS RESPONSE ARRAY
+        // 2. Relate forms by doc ID call
 
-            outputCollection[0] = "Success";
-            outputCollection[1] = "Success short description here";
-            outputCollection[2] = postFormRes.data;
-        }
+        const childFormID = getChildFormRes.data[0].revisionId;
+        shortDescription = `relating forms: ${parentGUID} and form ${childFormID}`;
+
+        await vvClient.forms
+            .relateForm(parentGUID, childFormID)
+            .then((res) => parseRes(res))
+            .then((res) => checkMetaAndStatus(res, shortDescription));
+
+        // 4.BUILD THE SUCCESS RESPONSE ARRAY
+
+        outputCollection[0] = "Success";
+        outputCollection[1] = "Success short description here";
 
         // Remember to add the helper functions parseRes, checkMetaAndStatus, checkDataPropertyExists and checkDataIsNotEmpty
     } catch (error) {

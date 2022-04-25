@@ -1,3 +1,5 @@
+var Q = require("q");
+
 console.log("Start");
 
 function aFunction(param1, param2) {
@@ -6,11 +8,12 @@ function aFunction(param1, param2) {
         console.log("Data found!");
         const varForParam3 = param1 + " " + param2;
         deferred.resolve(varForParam3);
-        return deferred.promise;
     }, 2000);
+    return deferred.promise;
 }
 
-const aVar = aFunction("data 1", "data 2");
-console.log(aVar);
+const aVar = aFunction("data 1", "data 2").then(function (prom) {
+    console.log(prom);
+});
 
 console.log("Finish");

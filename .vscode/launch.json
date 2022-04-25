@@ -11,7 +11,7 @@
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}\\vv5demo\\TrainingSession\\VVTrainingQjs.js"
+            "program": "${workspaceFolder}\\Dev\\CalculateAge.js"
         }
     ]
 }
