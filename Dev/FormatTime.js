@@ -13,10 +13,8 @@
     Last Rev Date: 26/04/2022
 
     Revision Notes:
-    26/04/2022 - Facundo Cameto:    Updated variable names
-                                    Added comments explaining the code
-                                    Removed unnecessary parameter
-                                    Updated variable definitions
+    26/04/2022 - Facundo Cameto:    Updated a variable name
+                                    Added header
 */
 
 //Get values from the original value passed to the function.
