@@ -24,13 +24,6 @@
                      returnUnit needs to be Seconds or Hours, otherwise it will return milliseconds.
 */
 
-//TimeDifference global function
-
-//Pass in the following parameters:  startTime, stopTime, startDate, stopDate, returnUnit
-//Time variables need to be in the format of 11:00 AM
-//Date variables need to be a valid date string.
-//returnUnit needs to be Seconds or Hours, otherwise it will return milliseconds.
-
 if (startDate == null || stopDate == null || startTime == null || stopTime == null || startDate == "" || stopDate == "" || startTime == "" || stopTime == "") {
     return "Invalid Parameters";
 }
