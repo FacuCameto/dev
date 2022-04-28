@@ -56,7 +56,7 @@ $.when(CallServerSide())
         } else if (serverSentOKResponse) {
             if (wsSentResponse) {
                 if (wsSentSuccessResponse) {
-                    message = formName + " is " + resp.data[2];
+                    message = resp.data[1];
 
                     // HANDLE SUCCESS RESPONSE HERE
                     VV.Form.SetFieldValue("Form Saved", "true");

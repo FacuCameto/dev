@@ -260,7 +260,7 @@ module.exports.main = async function (ffCollection, vvClient, response) {
 
         // STEP 2 - Send response with return array.
         outputCollection[0] = "Success";
-        outputCollection[1] = "Message";
+        outputCollection[1] = "This form is " + verifyUniqueResp.data.status;
         outputCollection[2] = verifyUniqueResp.data.status;
     } catch (error) {
         // Log errors captured.
